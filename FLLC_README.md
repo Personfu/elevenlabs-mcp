@@ -27,6 +27,7 @@ Custom tools extending the ElevenLabs MCP server for security operations.
 | `audio_forensics.py` | Silence detection, spectral analysis, integrity verification, metadata extraction |
 | `deepfake_detector.py` | AI voice deepfake detection — spectral discontinuity, pause patterns, breathing analysis, temporal jitter |
 | `tts_pipeline.py` | Script-to-podcast batch processor with chapter markers and multi-voice support |
+| `voice_cloning_defense.py` | Voiceprint extraction, TTS engine ID, watermarking, clone verification |
 
 ---
 
@@ -72,6 +73,31 @@ GUEST: Thanks for having me.
 # Chapter 2: Threat Landscape
 HOST: Let's talk about the 2026 threat landscape.
 ```
+
+---
+
+## Voice Cloning Defense (NEW 2026)
+
+Counter-measures for AI voice cloning attacks:
+
+```bash
+# Extract voiceprint from known voice
+python fllc_extensions/voice_cloning_defense.py voiceprint known_voice.wav
+
+# Compare two audio files
+python fllc_extensions/voice_cloning_defense.py compare known.wav suspect.wav
+
+# Identify which TTS engine generated audio
+python fllc_extensions/voice_cloning_defense.py identify suspect.wav
+
+# Inject attribution watermark
+python fllc_extensions/voice_cloning_defense.py watermark in.wav out.wav "FLLC-2026"
+
+# Verify watermark
+python fllc_extensions/voice_cloning_defense.py verify out.wav "FLLC-2026"
+```
+
+Counters: ElevenLabs, Resemble.AI, Coqui XTTS, Suno Bark, Tortoise TTS.
 
 ---
 
