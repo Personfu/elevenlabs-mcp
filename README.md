@@ -178,3 +178,21 @@ Once you obtain the absolute path (e.g., `/usr/local/bin/uvx`), update your conf
 
 
 
+
+## Fork dependency security and validation
+
+This checkout keeps the MCP SDK on its maintained 1.x API (`>=1.30.0,<2`)
+and requires Starlette 1.0.1 or later. The floor addresses
+[CVE-2026-48710](https://github.com/advisories/GHSA-86qp-5c8j-p5mr), where
+malformed Host headers could change the path seen by authorization middleware.
+Unused direct FastAPI and Uvicorn pins were removed; the MCP CLI still resolves
+its supported Uvicorn dependency. The stdio entry point remains the default.
+Do not expose an HTTP transport without authentication and the SDK's transport
+security settings.
+
+For a reproducible checkout, install `uv==0.13.7`, run `uv sync --locked`,
+then `uv run --frozen pytest`. Tests check malformed Host handling and register
+the actual server's tool schemas with a mocked provider and blocked outbound
+connections. They do not call paid generation, signing, voice cloning, or
+provider APIs. Reinstall/restart each MCP client using this checkout; changing
+this fork does not replace a published PyPI package or an already running server.
